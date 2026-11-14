@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru" data-palette="tandyr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Плов Центр — меню ресторана. Восточная кухня в Домодедово, Каширское шоссе, 7. Круглосуточно.">
+<meta name="theme-color" content="#17110D">
+<meta name="color-scheme" content="dark">
+<title>Плов Центр — Меню</title>
+
+<link rel="preload" href="assets/fonts/onest.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="assets/fonts/unbounded.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="assets/menu.css?v=22">
+</head>
+<body class="is-locked">
+
+<div id="welcome" aria-hidden="true">
+  <div class="welcome-box" id="welcome-box">
+    <div class="welcome-rosette" data-rosette="draw"></div>
+    <h2 class="welcome-title">Плов Центр</h2>
+    <p class="welcome-sub">Восточная кухня в Домодедово</p>
+    <p class="welcome-hint">Коснитесь, чтобы открыть меню</p>
+  </div>
+</div>
+
+<header id="header">
+  <div class="header-inner">
+    <a class="brand" id="logo" href="#" aria-label="Плов Центр">
+      <span class="brand-mark" data-rosette="mark"></span>
+      <span class="brand-text"><b>Плов Центр</b><small>Домодедово</small></span>
+    </a>
+    <div class="search" id="search-wrap">
+      <svg class="search-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20 16.2 16.2"/></svg>
+      <input id="search" type="search" placeholder="Найти блюдо" autocomplete="off" enterkeyhint="search" aria-label="Поиск по меню">
+      <button id="search-clear" type="button" aria-label="Очистить поиск">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg>
+      </button>
+    </div>
+    <button id="search-open" type="button" aria-label="Поиск">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20 16.2 16.2"/></svg>
+    </button>
+  </div>
+  <nav id="tabs" aria-label="Категории">
+    <div class="tabs-scroll" id="tabs-scroll">
+      <div class="tabs-inner" id="tabs-inner">
+        <span class="tab-ink" id="tab-ink" aria-hidden="true"></span>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main id="content">
+  <div id="search-bar" hidden><span id="search-count"></span> по запросу «<span id="search-term"></span>»</div>
+  <div id="sections">
+    <section class="cat-section is-skeleton" aria-hidden="true">
+      <div class="sk-title"></div>
+      <div class="cat-grid">
+        <div class="sk-card"></div><div class="sk-card"></div><div class="sk-card"></div>
+        <div class="sk-card"></div><div class="sk-card"></div><div class="sk-card"></div>
+      </div>
+    </section>
+  </div>
+  <section id="info" hidden>
+    <div class="info-block" id="info-contacts" hidden>
+      <h2 class="cat-title">Как нас найти</h2>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-row" id="i-addr-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.1 7-11.5a7 7 0 0 0-14 0C5 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+            <div><small>Адрес</small><span id="i-addr"></span></div>
+          </div>
+          <div class="info-row" id="i-hours-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+            <div><small>Часы работы</small><span id="i-hours"></span></div>
+          </div>
+          <div class="info-row" id="i-phone-row">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z"/></svg>
+            <div><small>Телефон</small><span id="i-phone" class="sel"></span></div>
+          </div>
+          <div class="info-btns">
+            <a class="ib primary" id="i-route" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M19 5h-7M19 5v7"/></svg>Маршрут
+            </a>
+            <a class="ib" id="i-call">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z"/></svg>Позвонить
+            </a>
+            <a class="ib" id="i-wa" target="_blank" rel="noopener" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-4.2A8.5 8.5 0 1 1 8.4 19z"/><path d="M9 8.5c0 3.6 2.9 6.5 6.5 6.5l1-1.6-2-1-1 .8a4 4 0 0 1-2.2-2.2l.8-1-1-2z"/></svg>WhatsApp
+            </a>
+          </div>
+        </div>
+        <div class="map-box" id="map-box" hidden>
+          <div class="frame-ph">
+            <span class="ph-rosette" data-rosette="mark"></span>
+            <button type="button" class="ya-load" data-ya-load>Показать карту</button>
+            <p class="ya-note">Карта откроется с сервиса Яндекс Карты. Яндекс получит ваш IP-адрес.</p>
+          </div>
+          <button type="button" class="map-shield" id="map-shield">Нажмите, чтобы двигать карту</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-block" id="info-reviews" hidden>
+      <h2 class="cat-title">Отзывы гостей</h2>
+      <div class="rev-box" id="rev-box" hidden>
+        <div class="frame-ph">
+          <span class="ph-rosette" data-rosette="mark"></span>
+          <button type="button" class="ya-load" data-ya-load>Показать отзывы</button>
+          <p class="ya-note">Отзывы откроются с сервиса Яндекс Карты. Яндекс получит ваш IP-адрес.</p>
+        </div>
+      </div>
+      <a class="rev-all" id="i-rev-all" target="_blank" rel="noopener" hidden>Все отзывы на Яндекс Картах</a>
+    </div>
+  </section>
+  <div id="search-empty" hidden>
+    <div class="empty-rosette" data-rosette="mark"></div>
+    <p>Такого блюда нет в меню.<br>Попробуйте другое слово.</p>
+  </div>
+  <div id="load-error" hidden>
+    <div class="empty-rosette" data-rosette="mark"></div>
+    <p>Меню не загрузилось.<br>Проверьте интернет и попробуйте снова.</p>
+    <button type="button" id="retry">Загрузить снова</button>
+  </div>
+</main>
+
+<div id="viewer" hidden role="dialog" aria-modal="true" aria-label="Просмотр меню">
+  <span class="v-count" id="v-count"></span>
+  <button type="button" class="v-btn v-close" id="v-close" aria-label="Закрыть"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>
+  <div class="v-stage" id="v-stage"><img id="v-img" alt=""></div>
+  <button type="button" class="v-btn v-prev" id="v-prev" aria-label="Назад"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6 8.5 12l6 6"/></svg></button>
+  <button type="button" class="v-btn v-next" id="v-next" aria-label="Дальше"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6l6 6-6 6"/></svg></button>
+</div>
+
+<footer>
+  <span class="foot-mark" data-rosette="mark"></span>
+  <span>Плов Центр</span>
+</footer>
+
+<script type="module" src="assets/menu.js?v=22"></script>
+</body>
+</html>
