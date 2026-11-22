@@ -180,13 +180,14 @@ const sortDishes = (arr) => arr
   .map((x) => x[0]);
 
 /* ═════════ Меню-картинки: одна готовая картинка на позицию ═════════ */
+const pageAlt = (p) => [p.title, p.weight, p.price].filter(Boolean).join(', ');
 function buildPage(p, list, i) {
   const b = el('button', 'pg');
   b.type = 'button';
-  b.setAttribute('aria-label', p.title || 'Открыть картинку');
+  b.setAttribute('aria-label', p.title ? p.title + ' — открыть' : 'Открыть картинку');
   if (p.w && p.h) b.style.aspectRatio = `${p.w} / ${p.h}`;
   const img = new Image();
-  img.alt = p.title || '';
+  img.alt = pageAlt(p);
   img.decoding = 'async';
   if (p.w && p.h) { img.width = p.w; img.height = p.h; }
   img._photo = p.photo;
@@ -279,7 +280,20 @@ function vShow() {
   const p = vList[vI];
   const img = $('v-img');
   img.src = p.photo;
-  img.alt = p.title || '';
+  img.alt = pageAlt(p);
+  // текст блюда под фото: название, вес, цена, состав
+  $('v-name').textContent = p.title || '';
+  const chips = $('v-chips');
+  chips.replaceChildren();
+  if (p.weight) chips.append(el('span', 'v-chip', p.weight));
+  if (p.price) chips.append(el('span', 'v-chip v-price', p.price));
+  chips.hidden = !chips.children.length;
+  const d = $('v-desc');
+  d.replaceChildren();
+  if (p.desc) { const b = el('b', '', 'Состав: '); d.append(b, p.desc); }
+  d.hidden = !p.desc;
+  $('v-info').hidden = !p.title;
+  viewer.scrollTop = 0;
   $('v-count').textContent = `${vI + 1} из ${vList.length}`;
   $('v-prev').hidden = $('v-next').hidden = vList.length < 2;
   // соседние картинки — заранее, чтобы листалось без ожидания

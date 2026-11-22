@@ -377,3 +377,23 @@ body.pages-mode #search-wrap, body.pages-mode #search-open { display: none; }
 .v-count { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 20px); left: max(16px, env(safe-area-inset-left, 0px)); color: var(--mist); font: 500 .85rem var(--body); }
 @media (min-width: 900px) { .v-prev, .v-next { bottom: auto; top: 50%; transform: translateY(-50%); } .v-prev { left: 24px; } .v-next { left: auto; right: 24px; } }
 @media (prefers-reduced-motion: reduce) { #viewer, .pg img { transition: none; } }
+
+/* ═══ Текст блюда под фото (для гостей и поисковиков) ═══ */
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+figure.pg { margin: 0; cursor: default; }
+#viewer { display: block; overflow-y: auto; overscroll-behavior: contain; padding: calc(env(safe-area-inset-top, 0px) + 62px) max(10px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 84px) max(10px, env(safe-area-inset-left, 0px)); }
+.v-stage { height: auto; min-height: 100%; display: flex; align-items: flex-start; justify-content: center; }
+.v-card { width: 100%; max-width: 620px; }
+#v-img { width: 100%; max-width: 100%; max-height: none; border-radius: 14px 14px 0 0; }
+.v-info { background: var(--glaze); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 14px 14px; padding: 16px 18px 18px; display: grid; gap: 10px; }
+.v-name { margin: 0; font: 600 1.25rem/1.25 var(--display); color: var(--cotton); text-wrap: balance; }
+.v-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.v-chip { font: 600 .82rem var(--body); padding: 5px 11px; border-radius: 999px; background: var(--tile); color: var(--cotton); }
+.v-chip.v-price { background: var(--turq); color: var(--turq-ink); }
+.v-desc { margin: 0; color: var(--mist); font: 400 .92rem/1.5 var(--body); }
+.v-desc b { color: var(--cotton); font-weight: 600; }
+.v-where { margin: 0; padding-top: 10px; border-top: 1px solid var(--line); color: var(--mist); font: 400 .78rem var(--body); }
+.v-close, .v-prev, .v-next, .v-count { position: fixed; }
+footer { flex-direction: column; text-align: center; }
+footer .about { margin: 0; max-width: 60ch; font: 400 .8rem/1.5 var(--body); color: var(--mist); }
+footer .foot-brand { display: flex; align-items: center; gap: 10px; }
