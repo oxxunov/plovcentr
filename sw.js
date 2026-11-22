@@ -3,9 +3,9 @@
 // Картинки меню (uploads/…) — навсегда из телефона: у каждой картинки своё имя,
 // новая картинка = новое имя, поэтому устареть они не могут.
 // Админка и данные меню (api/…) сюда не попадают — они всегда с сервера.
-const SHELL = 'pc-shell-gh2';
+const SHELL = 'pc-shell-gh3';
 const IMGS = 'pc-img-v1';
-const SHELL_FILES = ['./', 'assets/menu.css?v=23', 'assets/menu.js?v=23', 'assets/fonts/onest.woff', 'assets/fonts/unbounded.woff'];
+const SHELL_FILES = ['./', 'assets/menu.css?v=24', 'assets/menu.js?v=24', 'assets/fonts/onest.woff', 'assets/fonts/unbounded.woff'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(SHELL).then((c) => c.addAll(SHELL_FILES)).catch(() => {}).then(() => self.skipWaiting()));
@@ -57,7 +57,8 @@ async function shell(req, e) {
 async function page(req, e) {
   const c = await caches.open(SHELL);
   const key = './';
-  const net = fetch(req).then((res) => { if (res.ok) c.put(key, res.clone()).catch(() => {}); return res; });
+  // страницу всегда сверяем с сервером, мимо кэша браузера — иначе после обновления видна старая версия
+  const net = fetch(new Request(req.url, { cache: 'no-cache', credentials: 'same-origin' })).then((res) => { if (res.ok) c.put(key, res.clone()).catch(() => {}); return res; });
   e.waitUntil(net.catch(() => {}));
   const hit = await c.match(key);
   if (!hit) return net;

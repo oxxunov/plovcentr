@@ -730,6 +730,22 @@ async function getJSON(url) {
   } finally { clearTimeout(t); }
 }
 
+/* ═════════ Свежая версия сайта после обновления ═════════
+   В menu.json лежит номер сборки сайта (build), в странице — свой.
+   Если на сервере сборка новее, чем открытая страница, страница один раз
+   перезагружается и берёт новые файлы. */
+const PAGE_BUILD = Number((document.querySelector('meta[name="pc-build"]') || {}).content || 0);
+function checkBuild(j) {
+  const b = Number(j && j.build) || 0;
+  if (!b || b <= PAGE_BUILD) return false;
+  const key = 'pc_reload_' + b;
+  try { if (sessionStorage.getItem(key)) return false; sessionStorage.setItem(key, '1'); } catch { return false; }
+  const go = () => location.reload();
+  if (swReady) swReady.then((r) => (r ? r.update().catch(() => {}) : null)).finally(go);
+  else go();
+  return true;
+}
+
 async function load() {
   try { localStorage.removeItem('plovcenter_menu_cache'); } catch {}
   const cached = await idbGet(CACHE_KEY);
@@ -748,11 +764,14 @@ async function load() {
     // сначала только номер версии — крошечный ответ
     if (cached) {
       try {
-        const { v } = await getJSON('menu.json?check=' + Date.now());
+        const chk = await getJSON('menu.json?check=' + Date.now());
+        if (checkBuild(chk)) return;
+        const v = chk.v;
         if (v && cached.v === v) { keepOffline(); return; } // меню не менялось — всё уже на экране
       } catch {}
     }
     const j = await getJSON('menu.json?t=' + Date.now());
+    if (checkBuild(j)) return;
     categories = j.categories || [];
     dishes = (j.dishes || []).sort((a, b) => (a.createdAt ?? Infinity) - (b.createdAt ?? Infinity));
     info = j.info || null;
@@ -784,7 +803,15 @@ $('retry').addEventListener('click', () => {
    заходах всё открывается сразу из телефона, даже при плохой связи. */
 let swReady = null;
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
-  swReady = navigator.serviceWorker.register('sw.js', { scope: './' }).then(() => navigator.serviceWorker.ready).catch(() => null);
+  // если помощник браузера обновился (вышла новая версия сайта) — страница один раз перезагружается
+  const hadController = !!navigator.serviceWorker.controller;
+  let swReloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!hadController || swReloaded) return;
+    swReloaded = true;
+    location.reload();
+  });
+  swReady = navigator.serviceWorker.register('sw.js', { scope: './', updateViaCache: 'none' }).then(() => navigator.serviceWorker.ready).catch(() => null);
 }
 let offT = 0;
 function keepOffline() {
