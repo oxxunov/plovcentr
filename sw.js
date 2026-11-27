@@ -3,9 +3,9 @@
 // Картинки меню (uploads/…) — навсегда из телефона: у каждой картинки своё имя,
 // новая картинка = новое имя, поэтому устареть они не могут.
 // Админка и данные меню (api/…) сюда не попадают — они всегда с сервера.
-const SHELL = 'pc-shell-gh4';
+const SHELL = 'pc-shell-b26';
 const IMGS = 'pc-img-v1';
-const SHELL_FILES = ['./', 'assets/menu.css?v=25', 'assets/menu.js?v=25', 'assets/fonts/onest.woff', 'assets/fonts/unbounded.woff'];
+const SHELL_FILES = ['./', 'assets/menu.css?v=26', 'assets/menu.js?v=26', 'assets/fonts/onest.woff', 'assets/fonts/unbounded.woff'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(SHELL).then((c) => c.addAll(SHELL_FILES)).catch(() => {}).then(() => self.skipWaiting()));
